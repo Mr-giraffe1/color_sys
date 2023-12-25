@@ -1,0 +1,127 @@
+// // const { defineConfig } = require('@vue/cli-service')
+// // module.exports = defineConfig({
+// //   transpileDependencies: true
+// // })
+// // module.exports = {
+// //     devServer: {
+// //         open: true,
+// //         host: 'localhost',
+// //         port: 8080,
+// //         https: false,
+// //         //以上的ip和端口是我们本机的;下面为需要跨域的
+// //         proxy: { //配置跨域
+// //             '/api': {  // 这里和方法里 axios里的 url匹配   （本行为第9行）
+// //                 target: 'http://localhost:8086', //这里后台的地址模拟的;应该填写你们真实的后台接口  // 这里和后台地址完全匹配
+// //                 ws: true,
+// //                 changOrigin: true, //允许跨域
+// //                 pathRewrite: {
+// //                     '^/api': '/' //请求的时候使用这个api就可以 // 这里和  第9行匹配
+// //                 }
+// //             }
+// //         }
+// //     },
+// //     configureWebpack: {
+
+// //         performance: {
+// //             hints: 'warning',
+// //             //入口起点的最大体积
+// //             maxEntrypointSize: 50000000,
+// //             //生成文件的最大体积
+// //             maxAssetSize: 30000000,
+// //             //只给出 js 文件的性能提示
+// //             assetFilter: function(assetFilename) {
+// //                 return assetFilename.endsWith('.js');
+// //             }
+// //         }
+// //     },
+// //     publicPath: './',
+
+// // }
+
+
+// const { defineConfig } = require('@vue/cli-service')
+// module.exports = defineConfig({
+//   transpileDependencies: true,
+//   // 下面是解决跨域问题需要添加的内容
+//   devServer: {
+//     open: true,
+//     host:'88.1.131.35',//用来启动Network
+//     port: 8080,
+//     proxy: {
+//         '/api': {
+//             target: 'http://localhost:8086',
+//             changeOrigin: true,
+//             ws: true,
+//             secure: false,
+//             logLevel: 'debug',
+//             pathRewrite: {
+//                 '^/api': '/',
+//             },
+//         },
+//       }
+//     },
+
+// })
+
+
+
+
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true,
+  // 关闭eslint校验
+  lintOnSave: false ,
+  devServer: {
+    host: 'localhost', // 本地地址
+    port: 8080, // 端口号
+    open: true, // 配置项目在启动时自动在浏览器打开
+    //跨域配置
+    proxy: {
+        '/api' : { // '/api'是代理标识，一般是每个接口前的相同部分
+            target: "http://101.42.20.67:8086", // 请求地址，一般是服务器地址
+            changeOrigin: true, // 是否进行跨域
+            pathRewrite: { // pathRewrite的作用是把请求接口中的 '/api'替换掉，一般是替换为空""
+                '^/api':""
+            }
+        }
+    }
+  }
+})
+// module.exports = {
+//   devServer: {
+//       open: true,
+//       host: 'localhost',
+//       port: 8080,
+//       https: false,
+//       //以上的ip和端口是我们本机的;下面为需要跨域的
+//       proxy: { //配置跨域
+//         '/api': {  // 这里和方法里 axios里的 url匹配   （本行为第9行）
+//               target: 'http://localhost:8086', //这里后台的地址模拟的;应该填写你们真实的后台接口  // 这里和后台地址完全匹配
+//               ws: true,
+//               changOrigin: true, //允许跨域
+//               pathRewrite: {
+//                   '^/api': '' //请求的时候使用这个api就可以 // 这里和  第9行匹配
+//               }
+//           }
+//       }
+//   },
+//   configureWebpack: {
+
+//       performance: {
+//           hints: 'warning',
+//           //入口起点的最大体积
+//           maxEntrypointSize: 50000000,
+//           //生成文件的最大体积
+//           maxAssetSize: 30000000,
+//           //只给出 js 文件的性能提示
+//           assetFilter: function(assetFilename) {
+//               return assetFilename.endsWith('.js');
+//           }
+//       }
+//   },
+//   publicPath: './',
+
+// }
+
+
+

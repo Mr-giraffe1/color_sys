@@ -1,0 +1,30 @@
+import Vue from "vue";
+import VueRouter from "vue-router";
+
+//2.调用vue.use函数，把vueRouter安装为vue的插件
+Vue.use(VueRouter);
+
+const originalPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
+import home from "./components/home.vue"
+const router = new VueRouter({
+    routes: [
+      //重定向
+      { path: "/", redirect: "/home" },
+      // { path: "/", redirect: "/Home" },
+      { path: "/home", component: home},
+    ]  
+});
+
+
+
+
+
+
+
+//4.向外同享路由的实例对象
+export default router;

@@ -1,0 +1,4 @@
+import Vue from 'vue'
+
+//向外界共享vue示例
+export default new Vue()
