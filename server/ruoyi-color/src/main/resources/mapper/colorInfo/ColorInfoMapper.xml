@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.colorInfo.mapper.ColorInfoMapper">
+    
+    <resultMap type="ColorInfo" id="ColorInfoResult">
+        <result property="c"    column="c"    />
+        <result property="m"    column="m"    />
+        <result property="y"    column="y"    />
+        <result property="k"    column="k"    />
+        <result property="r"    column="r"    />
+        <result property="g"    column="g"    />
+        <result property="b"    column="b"    />
+        <result property="hex"    column="hex"    />
+        <result property="name"    column="name"    />
+        <result property="pinyin"    column="pinyin"    />
+        <result property="remark"    column="remark"    />
+        <result property="sys"    column="sys"    />
+        <result property="image"    column="image"    />
+        <result property="id"    column="id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectColorInfoVo">
+        select c, m, y, k, r, g, b, hex, name, pinyin, remark, sys, image, id, create_time, update_time from co_color_data
+    </sql>
+
+    <select id="selectColorInfoList" parameterType="ColorInfo"
+            resultType="com.ruoyi.colorInfo.vo.ColorInfoVo">
+        <include refid="selectColorInfoVo"/>
+        <where>  
+            <if test="params.beginC != null and params.beginC != '' and params.endC != null and params.endC != ''"> and c between #{params.beginC} and #{params.endC}</if>
+            <if test="params.beginM != null and params.beginM != '' and params.endM != null and params.endM != ''"> and m between #{params.beginM} and #{params.endM}</if>
+            <if test="params.beginY != null and params.beginY != '' and params.endY != null and params.endY != ''"> and y between #{params.beginY} and #{params.endY}</if>
+            <if test="params.beginK != null and params.beginK != '' and params.endK != null and params.endK != ''"> and k between #{params.beginK} and #{params.endK}</if>
+            <if test="params.beginR != null and params.beginR != '' and params.endR != null and params.endR != ''"> and r between #{params.beginR} and #{params.endR}</if>
+            <if test="params.beginG != null and params.beginG != '' and params.endG != null and params.endG != ''"> and g between #{params.beginG} and #{params.endG}</if>
+            <if test="params.beginB != null and params.beginB != '' and params.endB != null and params.endB != ''"> and b between #{params.beginB} and #{params.endB}</if>
+            <if test="hex != null  and hex != ''"> and hex like concat('%', #{hex}, '%')</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="pinyin != null  and pinyin != ''"> and pinyin = #{pinyin}</if>
+            <if test="sys != null  and sys != ''"> and sys = #{sys}</if>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
+        </where>
+    </select>
+    
+    <select id="selectColorInfoById" parameterType="Long" resultMap="ColorInfoResult">
+        <include refid="selectColorInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertColorInfo" parameterType="ColorInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into co_color_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="c != null">c,</if>
+            <if test="m != null">m,</if>
+            <if test="y != null">y,</if>
+            <if test="k != null">k,</if>
+            <if test="r != null">r,</if>
+            <if test="g != null">g,</if>
+            <if test="b != null">b,</if>
+            <if test="hex != null">hex,</if>
+            <if test="name != null">name,</if>
+            <if test="pinyin != null">pinyin,</if>
+            <if test="remark != null">remark,</if>
+            <if test="sys != null">sys,</if>
+            <if test="image != null">image,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="c != null">#{c},</if>
+            <if test="m != null">#{m},</if>
+            <if test="y != null">#{y},</if>
+            <if test="k != null">#{k},</if>
+            <if test="r != null">#{r},</if>
+            <if test="g != null">#{g},</if>
+            <if test="b != null">#{b},</if>
+            <if test="hex != null">#{hex},</if>
+            <if test="name != null">#{name},</if>
+            <if test="pinyin != null">#{pinyin},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="sys != null">#{sys},</if>
+            <if test="image != null">#{image},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateColorInfo" parameterType="ColorInfo">
+        update co_color_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="c != null">c = #{c},</if>
+            <if test="m != null">m = #{m},</if>
+            <if test="y != null">y = #{y},</if>
+            <if test="k != null">k = #{k},</if>
+            <if test="r != null">r = #{r},</if>
+            <if test="g != null">g = #{g},</if>
+            <if test="b != null">b = #{b},</if>
+            <if test="hex != null">hex = #{hex},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="pinyin != null">pinyin = #{pinyin},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="sys != null">sys = #{sys},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteColorInfoById" parameterType="Long">
+        delete from co_color_data where id = #{id}
+    </delete>
+
+    <delete id="deleteColorInfoByIds" parameterType="String">
+        delete from co_color_data where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.modelImage.mapper.ModelImageMapper">
+    
+    <resultMap type="ModelImage" id="ModelImageResult">
+        <result property="id"    column="id"    />
+        <result property="creatTime"    column="creat_time"    />
+        <result property="imageAddress"    column="image_address"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="auditStatus"    column="audit_status"    />
+    </resultMap>
+    <resultMap type="com.ruoyi.modelImage.vo.ModelImageVo" id="ModelImageVoResult">
+        <result property="id"    column="id"    />
+        <result property="creatTime"    column="creat_time"    />
+        <result property="imageAddress"    column="image_address"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="auditStatus"    column="audit_status"    />
+        <result property="userName"    column="user_Name"    />
+    </resultMap>
+
+    <sql id="selectModelImageVo">
+        select id, creat_time, image_address, create_user, is_delete, audit_status from co_model_image
+    </sql>
+
+    <select id="selectModelImageList" parameterType="ModelImage" resultMap="ModelImageVoResult">
+        select
+            id,
+            creat_time,
+            image_address,
+            create_user,
+            is_delete,
+            audit_status,
+            user_name
+            from co_model_image as m left join sys_user as u on m.create_user=u.user_id
+        <where>  
+            <if test="creatTime != null "> and creat_time = #{creatTime}</if>
+            <if test="imageAddress != null  and imageAddress != ''"> and image_address = #{imageAddress}</if>
+            <if test="createUser != null "> and create_user = #{createUser}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="auditStatus != null "> and audit_status = #{auditStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectModelImageById" parameterType="Long" resultMap="ModelImageResult">
+        <include refid="selectModelImageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertModelImage" parameterType="ModelImage">
+        insert into co_model_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="creatTime != null">creat_time,</if>
+            <if test="imageAddress != null">image_address,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="isDelete != null">is_delete,</if>
+            <if test="auditStatus != null">audit_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="creatTime != null">#{creatTime},</if>
+            <if test="imageAddress != null">#{imageAddress},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+            <if test="auditStatus != null">#{auditStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateModelImage" parameterType="ModelImage">
+        update co_model_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="creatTime != null">creat_time = #{creatTime},</if>
+            <if test="imageAddress != null">image_address = #{imageAddress},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            <if test="auditStatus != null">audit_status = #{auditStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteModelImageById" parameterType="Long">
+        delete from co_model_image where id = #{id}
+    </delete>
+
+    <delete id="deleteModelImageByIds" parameterType="String">
+        delete from co_model_image where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

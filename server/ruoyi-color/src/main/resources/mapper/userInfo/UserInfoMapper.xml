@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.userInfo.mapper.UserInfoMapper">
+    
+    <resultMap type="UserInfo" id="UserInfoResult">
+        <result property="id"    column="id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="lastTime"    column="last_time"    />
+        <result property="userName"    column="user_name"    />
+        <result property="password"    column="password"    />
+        <result property="credit"    column="credit"    />
+        <result property="inviteUser"    column="invite_user"    />
+        <result property="grade"    column="grade"    />
+        <result property="exp"    column="exp"    />
+        <result property="loginTimes"    column="login_times"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectUserInfoVo">
+        select id, create_time, last_time, user_name, password, credit, invite_user, grade, exp, login_times, is_delete from co_user_info
+    </sql>
+
+    <select id="selectUserInfoList" parameterType="UserInfo" resultMap="UserInfoResult">
+        <include refid="selectUserInfoVo"/>
+        <where>  
+            <if test="lastTime != null "> and last_time = #{lastTime}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="credit != null "> and credit = #{credit}</if>
+            <if test="inviteUser != null "> and invite_user = #{inviteUser}</if>
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="exp != null "> and exp = #{exp}</if>
+            <if test="loginTimes != null "> and login_times = #{loginTimes}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserInfoById" parameterType="Long" resultMap="UserInfoResult">
+        <include refid="selectUserInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserInfo" parameterType="UserInfo">
+        insert into co_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="lastTime != null">last_time,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="password != null">password,</if>
+            <if test="credit != null">credit,</if>
+            <if test="inviteUser != null">invite_user,</if>
+            <if test="grade != null">grade,</if>
+            <if test="exp != null">exp,</if>
+            <if test="loginTimes != null">login_times,</if>
+            <if test="isDelete != null">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="lastTime != null">#{lastTime},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="password != null">#{password},</if>
+            <if test="credit != null">#{credit},</if>
+            <if test="inviteUser != null">#{inviteUser},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="exp != null">#{exp},</if>
+            <if test="loginTimes != null">#{loginTimes},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserInfo" parameterType="UserInfo">
+        update co_user_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="lastTime != null">last_time = #{lastTime},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="credit != null">credit = #{credit},</if>
+            <if test="inviteUser != null">invite_user = #{inviteUser},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="exp != null">exp = #{exp},</if>
+            <if test="loginTimes != null">login_times = #{loginTimes},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserInfoById" parameterType="Long">
+        delete from co_user_info where id = #{id}
+    </delete>
+
+    <delete id="deleteUserInfoByIds" parameterType="String">
+        delete from co_user_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
