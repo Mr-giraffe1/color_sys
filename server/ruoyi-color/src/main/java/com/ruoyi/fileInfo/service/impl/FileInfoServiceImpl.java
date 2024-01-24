@@ -18,7 +18,7 @@ import java.util.TreeMap;
 /**
  * 上传文件信息 服务实现类
  *
- * @author wzz
+ * @author kai
  * @since 2023-07-04
  */
 @Service
@@ -49,7 +49,7 @@ public class FileInfoServiceImpl implements IFileInfoService {
 							.credentials(accessKey, secretKey)
 							.build();
 
-			String bucketName=defaultBucketName;
+			String bucketName = defaultBucketName;
 
 			// 创建BucketExistsArgs实例
 			BucketExistsArgs existsArgs = BucketExistsArgs.builder()
