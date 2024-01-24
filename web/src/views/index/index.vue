@@ -3,7 +3,7 @@
 
     <div class="bg" :style="{ background: bgColor }">
       <div class="loginBut" @click="showLogin">登录</div>
-
+      <div>test</div>
     </div>
     <!-- <div style="border: 1px solid black;width: 50px;height: 50px;">123321</div> -->
     <div class="container">
